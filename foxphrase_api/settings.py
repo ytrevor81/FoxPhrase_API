@@ -25,7 +25,7 @@ SECRET_KEY = '4wp&da$3-7yzh9&2v!&+n&%-g(qhg&iaali*0habm-ynb1!e4t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [*]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'main_api.apps.MainApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -74,8 +75,14 @@ WSGI_APPLICATION = 'foxphrase_api.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+    'default': {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    'NAME': 'foxphrase',
+    'USER': 'postgres',
+    'PASSWORD': 'Somchai000',
+    'HOST': '127.0.0.1',
+    'PORT': '5432'
+    }
 }
 
 

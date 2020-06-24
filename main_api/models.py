@@ -1,18 +1,14 @@
 from django.db import models
 
-class Decks(models.Model):
+class Deck(models.Model):
     user = models.CharField(max_length=100)
+    user_email = models.CharField(max_length=100, null=True)
     deck_name = models.CharField(max_length=100)
     description = models.CharField(max_length=250)
     words = models.TextField()
     published = models.DateField("Uploaded on")
-    likes = models.IntegerField()
-    comments = models.TextField()
+    likes = models.IntegerField(null=True)
+    comments = models.TextField(null=True)
 
     def __str__(self):
-        return self.user + "'s Decks"
-
-class User(models.Model):
-    user = models.CharField(max_length=100)
-    decks_downloaded = models.IntegerField()
-    decks_uploaded =  models.IntegerField()
+        return self.user + "'s " + self.deck_name

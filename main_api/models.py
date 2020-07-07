@@ -8,6 +8,7 @@ class Deck(models.Model):
     words = models.TextField()
     published = models.DateField("Uploaded on")
     likes = models.IntegerField(null=True)
+    downloads = models.IntegerField(null=True)
     #comments = models.TextField(null=True)
 
     def __str__(self):

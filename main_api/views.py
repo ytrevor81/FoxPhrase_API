@@ -28,8 +28,8 @@ def explore_list(request):
 #Downlaods one deck from Django DB
 @api_view(['GET'])
 def download(request, pk):
-    deck = Deck.objects.get(id=pk)
-    serializer = DeckSerializer(deck, many=False)
+    deck = Deck.objects.filter(id=pk)
+    serializer = DeckSerializer(deck, many=True)
     return Response(serializer.data)
 
 #Creates one deck

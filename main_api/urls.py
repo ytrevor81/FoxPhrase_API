@@ -10,5 +10,5 @@ urlpatterns = [
     path('download/<str:pk>/', views.download, name="download"),
     path('upload/', views.upload, name="upload"),
     path('update/<str:pk>/', views.update, name="update"),
-    path('delete/<str:pk>/', views.delete_deck, name="delete_deck"),
+    path('delete/<str:user>&<str:deck_name>/', views.delete_deck, name="delete_deck"),
 ]

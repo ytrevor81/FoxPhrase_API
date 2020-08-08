@@ -55,8 +55,8 @@ def update(request, pk):
 
 #Deletes a Deck
 @api_view(['DELETE'])
-def delete_deck(request, pk):
-    deck = Deck.objects.get(id=pk)
+def delete_deck(request, user, deck_name):
+    deck = Deck.objects.get(user=user, deck_name=deck_name)
     deck.delete()
 
     return Response("Deck Deleted!!!")

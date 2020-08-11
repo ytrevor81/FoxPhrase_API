@@ -11,10 +11,10 @@ from .models import Deck
 def api_overview(request):
     api_urls = {
         'Explore':'/explore/',  #GET all decks for Explore Decks page
-        'Download':'/download/<str:pk>',    #GET one deck for download onto local device
+        'Download':'/download/<str:pk>/',    #GET one deck for download onto local device
         'Upload':'/upload/',    #POST create deck into Django DB
-        'Update':'/update/<str:pk>',    #POST update one deck in regards to downloads # and likes #
-        'Delete':'/delete/<str:pk>',    #DELETE one decks from Django DB
+        'Update':'/update/<str:pk>/',    #POST update one deck in regards to downloads # and likes #
+        'Delete':'/delete/<str:user>&<str:deck_name>/',    #DELETE one decks from Django DB
     }
     return Response(api_urls)
 
@@ -56,6 +56,8 @@ def update(request, pk):
 #Deletes a Deck
 @api_view(['DELETE'])
 def delete_deck(request, user, deck_name):
+    print(user)
+    print(deck_name)
     deck = Deck.objects.get(user=user, deck_name=deck_name)
     deck.delete()
 

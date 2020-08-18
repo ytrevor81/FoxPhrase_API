@@ -7,6 +7,7 @@ app_name = "main_api"
 urlpatterns = [
     path('', views.api_overview, name="api_overview"),
     path('explore/', views.explore_list, name="explore_list"),
+    path('search/<str:deck_query>/', views.search, name="search"),
     path('download/<str:pk>/', views.download, name="download"),
     path('upload/', views.upload, name="upload"),
     path('update/<str:pk>/', views.update, name="update"),

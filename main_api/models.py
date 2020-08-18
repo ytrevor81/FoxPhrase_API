@@ -9,7 +9,6 @@ class Deck(models.Model):
     published = models.DateField("Uploaded on")
     likes = models.IntegerField(null=True)
     downloads = models.IntegerField(null=True)
-    #comments = models.TextField(null=True)
 
     def __str__(self):
         return self.user + "'s " + self.deck_name

@@ -32,7 +32,7 @@ def api_overview(request):
 #Retreives all decks for explore decks
 @api_view(['GET'])
 def explore_list(request):
-    decks = Deck.objects.all()
+    decks = Deck.objects.all().order_by('-downloads') #returns list of all decks in correct order from most downloads to least downloads
     serializer = DeckSerializer(decks, many=True)
     return Response(serializer.data)
 
@@ -40,12 +40,11 @@ def explore_list(request):
 @api_view(['GET'])
 def search(request, deck_query):
     all_decks = Deck.objects.all()
-    print(deck_query)
-    just_names = [i.deck_name for i in all_decks]
+    just_names = [i.deck_name for i in all_decks] #extracts only the names of each deck
 
-    name_query = names_list(just_names, deck_query)
+    name_query = names_list(just_names, deck_query) #sorts the names matching the search query
 
-    decks = Deck.objects.filter(deck_name__in=name_query)
+    decks = Deck.objects.filter(deck_name__in=name_query) #gets the decks matching the elements of name_query
     serializer = DeckSerializer(decks, many=True)
     return Response(serializer.data)
 
@@ -80,8 +79,6 @@ def update(request, pk):
 #Deletes a Deck
 @api_view(['DELETE'])
 def delete_deck(request, user, deck_name):
-    print(user)
-    print(deck_name)
     deck = Deck.objects.get(user=user, deck_name=deck_name)
     deck.delete()
 

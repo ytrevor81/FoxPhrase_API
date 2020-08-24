@@ -44,7 +44,7 @@ def search(request, deck_query):
 
     name_query = names_list(just_names, deck_query) #sorts the names matching the search query
 
-    decks = Deck.objects.filter(deck_name__in=name_query) #gets the decks matching the elements of name_query
+    decks = Deck.objects.filter(deck_name__in=name_query).order_by('-downloads') #gets the decks matching the elements of name_query
     serializer = DeckSerializer(decks, many=True)
     return Response(serializer.data)
 

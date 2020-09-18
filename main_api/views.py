@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import DeckSerializer
+from .serializers import DeckSerializer, UserSerializer
 from .models import Deck
 
 
@@ -21,6 +21,7 @@ def names_list(just_names_list, deck_query):
 def api_overview(request):
     api_urls = {
         'Explore':'/explore/',  #GET all decks for Explore Decks page
+        'New Account':'/account/',  #POST create new account
         'Search':'/search/<str:deck_name>/',    #GET one deck for download onto local device
         'Download':'/download/<str:pk>/',    #GET one deck for download onto local device
         'Upload':'/upload/',    #POST create deck into Django DB
@@ -59,6 +60,16 @@ def download(request, pk):
 @api_view(['POST'])
 def upload(request):
     serializer = DeckSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+#Inputs new users
+@api_view(['POST'])
+def new_account(request):
+    serializer = UserSerializer(data=request.data)
 
     if serializer.is_valid():
         serializer.save()

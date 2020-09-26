@@ -34,7 +34,8 @@ def api_overview(request):
 @api_view(['GET'])
 def explore_list(request):
     decks = Deck.objects.all().order_by('-downloads') #returns list of all decks in correct order from most downloads to least downloads
-    serializer = DeckSerializer(decks, many=True)
+    topdecks = decks[:20]
+    serializer = DeckSerializer(topdecks, many=True)
     return Response(serializer.data)
 
 #Retreives decks for search decks
@@ -46,7 +47,8 @@ def search(request, deck_query):
     name_query = names_list(just_names, deck_query) #sorts the names matching the search query
 
     decks = Deck.objects.filter(deck_name__in=name_query).order_by('-downloads') #gets the decks matching the elements of name_query
-    serializer = DeckSerializer(decks, many=True)
+    topdecks = decks[:20]
+    serializer = DeckSerializer(topdecks, many=True)
     return Response(serializer.data)
 
 #Downlaods one deck from Django DB

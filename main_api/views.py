@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import DeckSerializer, UserSerializer
-from .models import Deck
+from .models import Deck, User
 
 
 #Function for search function
@@ -31,6 +31,7 @@ def accurate_names(raw_names, raw_tags, raw_descriptions):
 @api_view(['GET'])
 def api_overview(request):
     api_urls = {
+        'Users':'/users/', #GET for gathering all users, to check if user has an account
         'Top Decks':'/topdecks/', #GET for the top ten most downloaded decks
         'New Decks':'/newdecks/', #GET for the 20 newest decks
         'New Account':'/account/',  #POST create new account
@@ -44,10 +45,9 @@ def api_overview(request):
 
 #Retreives all decks for explore decks
 @api_view(['GET'])
-def explore_list(request):
-    decks = Deck.objects.all().order_by('-downloads') #returns list of all decks in correct order from most downloads to least downloads
-    topdecks = decks[:20]
-    serializer = DeckSerializer(topdecks, many=True)
+def userdata(request, user_query):
+    users = User.objects.filter(user=user_query) #returns list of all users
+    serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -106,15 +106,6 @@ def upload(request):
         serializer.save()
 
     return Response(serializer.data)
-
-#@api_view(['POST'])
-#def uploadwithhashtags(request):
-#    serializer = DeckSerializer(data=request.data)
-
-#    if serializer.is_valid():
-#        serializer.save()
-
-#    return Response(serializer.data)
 
 #Inputs new users
 @api_view(['POST'])

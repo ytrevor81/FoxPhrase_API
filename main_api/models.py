@@ -17,7 +17,7 @@ class User(models.Model):
     user = models.CharField(max_length=50)
     user_email = models.CharField(max_length=100, null=True)
     date_joined = models.DateField("Account created on")
-    #password?
+    password = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.user
